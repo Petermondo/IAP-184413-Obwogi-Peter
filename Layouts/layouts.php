@@ -10,8 +10,9 @@ class layouts {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?php echo $conf['site_name']; ?></title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
+
+            <!-- Bootstrap -->  
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
      <style>
       body { padding-top: 70px; } /* fix for fixed-top navbar overlap */
       </style>  
@@ -21,8 +22,8 @@ class layouts {
     <?php
     }
 
-    //NAVIGATION
-    public function nav($conf) {
+    // Navigation bar
+        public function nav($conf) {
     ?>
     <div style="margin-top: 70px;"></div>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -33,17 +34,17 @@ class layouts {
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active"><a class="nav-link" href="./">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="signup.php">Sign Up</a></li>
-          <li class="nav-item"><a class="nav-link" href="signin.php">Sign In</a></li>
-        </ul>
+         <li class="nav-item"> <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : ''; ?>" href="./">Home</a> </li>
+         <li class="nav-item"> <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'signup.php') ? 'active' : ''; ?>" href="signup.php">Sign Up</a> </li>
+         <li class="nav-item"> <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'signin.php') ? 'active' : ''; ?>" href="signin.php">Sign In</a> </li>
+          </ul>
         
       </div>
     </nav>
     <?php
     }
 
-    //BANNER
+        //BANNER
      public function banner($conf) {
     ?>
     <main role="main">
@@ -56,6 +57,7 @@ class layouts {
       </div>
     <?php
     }
+
 
     //CONTENT
      public function content($conf) {
@@ -70,43 +72,51 @@ class layouts {
       </div>
     <?php
     }
-    //SIGNUP / SIGNIN FORMS
-public function form_frame($conf, $ObjForm) {
-    ?>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8">
-            <?php
-            if (basename($_SERVER['PHP_SELF']) == '/Obwogi_Peter_Mondo_184413/signup.php') {
-                $ObjForm->signup();
-            } else {
-                $ObjForm->signin();
-            }
-            ?>
-          </div>
-          <div class="col-md-4">
-            <h2>Side Info</h2>
-            <p>Some extra text or ads here...</p>
-          </div>
-        </div>
-        <hr>
-      </div>
-    <?php
-    }
-    //FOOTER
-    public function footer($conf) {
-    ?>
-    </main>
-    <footer class="container">
-      <p>Copyright &copy; - <?php echo $conf['site_name'] . " " . date("Y"); ?></p>
-    </footer>
 
-    <!-- Bootstrap JS -->
+
+    // Sign in / Sign up
+    public function form_frame($conf, $ObjForm, $ObjFncs) {
+        ?>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="h-100 p-5 text-bg-dark rounded-3 shadow-sm">
+                    <?php
+                    $page = basename($_SERVER['PHP_SELF']);
+                    if ($page === 'signup.php') {
+                        $ObjForm->signup($conf, $ObjFncs);
+                    } else {
+                        $ObjForm->signin($conf, $ObjFncs);
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="h-100 p-5 bg-white border rounded-3 shadow-sm">
+                    <h2>Why join us?</h2>
+                    <p>Sign up and unlock exclusive features tailored just for you.</p>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+
+    // Footer
+    public function footer(array $conf = []) {
+        $siteName = htmlspecialchars($conf['site_name'] ?? "My Website");
+        ?>
+        <footer class="pt-4 mt-5 text-center text-muted border-top">
+            <small>&copy; <?= date("Y") ?> <?= $siteName ?>. All rights reserved.</small>
+        </footer>
+        <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
   </body>
-</html>
-    <?php
-}
+    
+        </main>
+        <script src="<?= htmlspecialchars($conf['site_url'] ?? '') ?>/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        </body>
+        </html>
+        <?php
+    }
 }

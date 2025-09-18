@@ -6,7 +6,7 @@ $mailCnt = [
     'name_from' => 'ICS 2.2',
     'mail_from' => 'no-reply@icsacademy.com',
     'name_to' => $name,
-    'mail_to' =>$email,
+    'mail_to' =>'petermondo254@gmail.com',
     'subject' => 'Welcome to ICS Academy',
  'body' => "
         <html>
@@ -24,5 +24,5 @@ $mailCnt = [
     "
 ];
 
-$ObjSendMail->sendMail($conf, $mailCnt);
+$ObjSendMail->SendMail()($conf, $mailCnt);
 echo "Mail sent successfully";
